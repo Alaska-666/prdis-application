@@ -1,4 +1,4 @@
 FROM openjdk:11-jre-slim
-COPY target/currency-0.0.1-SNAPSHOT.jar /app/currency.jar
+COPY target/currency-0.0.1-SNAPSHOT.jar /currency.jar
 EXPOSE 8081
-ENTRYPOINT ["java","-jar","/app/currency.jar"]
+ENTRYPOINT ["java","-jar","/currency.jar"]

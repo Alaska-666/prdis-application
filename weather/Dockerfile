@@ -1,4 +1,4 @@
 FROM openjdk:11-jre-slim
-COPY target/weather-0.0.1-SNAPSHOT.jar /app/weather.jar
+COPY target/weather-0.0.1-SNAPSHOT.jar /weather.jar
 EXPOSE 8082
-ENTRYPOINT ["java","-jar","/app/weather.jar"]
+ENTRYPOINT ["java","-jar","/weather.jar"]
