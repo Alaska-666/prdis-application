@@ -1,0 +1,9 @@
+---
+images_prefix: isaeva
+deploy_path: /edu/isaeva
+
+services:
+  eureka: "eureka"
+  weather: "weather"
+  currency: "currency"
+  prediction: "prediction"
