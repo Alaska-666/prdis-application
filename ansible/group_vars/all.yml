@@ -1,9 +1,11 @@
 ---
 images_prefix: isaeva
 deploy_path: /edu/isaeva
+db: 194.87.111.112
 
 services:
   eureka: "eureka"
   weather: "weather"
   currency: "currency"
   prediction: "prediction"
+  postgres: "postgres"

@@ -11,6 +11,9 @@ services:
       - 8081:8081
     depends_on:
       - eureka
+    environment:
+      - JAVA_OPTS=
+        -DB_SERVER=jdbc:postgresql://{{ db }}:5432/postgres
 
   weather:
     image: "{{ images_prefix }}/{{ services.weather }}:hw4"
@@ -18,6 +21,9 @@ services:
       - 8082:8082
     depends_on:
       - eureka
+    environment:
+      - JAVA_OPTS=
+        -DB_SERVER=jdbc:postgresql://{{ db }}:5432/postgres
 
   prediction:
     image: "{{ images_prefix }}/{{ services.prediction }}:hw4"
