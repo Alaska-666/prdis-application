@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class PredictService {
-    private final EurekaClient discoveryClient;
+    private final EurekaClient eurekaClient;
     private final RestTemplate restTemplate;
     private static final int DAYS = 8;
     private static final String CITY = "Moscow";
 
-    public PredictService(EurekaClient discoveryClient, RestTemplate restTemplate) {
-        this.discoveryClient = discoveryClient;
+    public PredictService(EurekaClient eurekaClient, RestTemplate restTemplate) {
+        this.eurekaClient = eurekaClient;
         this.restTemplate = restTemplate;
     }
 
@@ -41,7 +41,7 @@ public class PredictService {
 
     private List<Double> getCurrency() {
         String currencyServiceName = "CURRENCY";
-        InstanceInfo instance = discoveryClient.getNextServerFromEureka(currencyServiceName, false);
+        InstanceInfo instance = eurekaClient.getNextServerFromEureka(currencyServiceName, false);
         String requestUrl = UriComponentsBuilder
                 .fromUri(URI.create(instance.getHomePageUrl()))
                 .queryParam("days", DAYS)
@@ -53,7 +53,7 @@ public class PredictService {
 
     private List<Weather> getWeather() {
         String weatherServiceName = "WEATHER";
-        InstanceInfo instance = discoveryClient.getNextServerFromEureka(weatherServiceName, false);
+        InstanceInfo instance = eurekaClient.getNextServerFromEureka(weatherServiceName, false);
         String requestUrl = UriComponentsBuilder
                 .fromUri(URI.create(instance.getHomePageUrl()))
                 .queryParam("days", DAYS)
