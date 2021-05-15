@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: eureka
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /eureka
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /eureka
+            pathType: Exact
+            backend:
+              service:
+                name: eureka
+                port:
+                  number: 8761

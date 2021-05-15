@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prediction
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /prediction
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /prediction
+            pathType: Exact
+            backend:
+              service:
+                name: prediction
+                port:
+                  number: 8083

@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: currency
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /currency
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /currency
+            pathType: Exact
+            backend:
+              service:
+                name: currency
+                port:
+                  number: 8081
