@@ -1,0 +1,6 @@
+---
+- import_playbook: build.yml
+- import_playbook: save.yml
+- import_playbook: load.yml
+- import_playbook: db.yml
+- import_playbook: run.yml
