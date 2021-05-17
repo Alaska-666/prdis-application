@@ -1,31 +1,46 @@
 package mipt.bit.prdis.weather;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
+@Table(name="weather")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Weather {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public long id;
+
+    @Column(name="date")
+    private String date;
+
+    @Column(name="city")
+    private String city;
+
     @JsonProperty("maxtemp_c")
+    @Column(name="maxtemp_c")
     public double maxTempC;
+
     @JsonProperty("mintemp_c")
+    @Column(name="mintemp_c")
     public double minTempC;
+
     @JsonProperty("avgtemp_c")
+    @Column(name="avgtemp_c")
     public double avgTempC;
 
     @JsonProperty("maxwind_mph")
+    @Column(name="maxwind_mph")
     public double maxWindMph;
+
     @JsonProperty("totalprecip_mm")
+    @Column(name="totalprecip_mm")
     public double totalPrecipMm;
+
     @JsonProperty("avgvis_km")
+    @Column(name="avgvis_km")
     public double avgVisKm;
 
     public Weather(double maxTempC, double minTempC, double avgTempC, double maxWindMph, double totalPrecipMm, double avgVisKm) {
@@ -97,5 +112,21 @@ public class Weather {
 
     public void setAvgVisKm(double avgVisKm) {
         this.avgVisKm = avgVisKm;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

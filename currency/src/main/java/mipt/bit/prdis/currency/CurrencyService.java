@@ -25,8 +25,13 @@ public class CurrencyService {
 
     private Double getDollarCurrencyDaysBefore(int daysBefore) {
         String date = DateTimeFormatter.ofPattern("dd/MM/yyyy").format(LocalDate.now().minusDays(daysBefore));
-        Optional<CurrencyEntity> currency = currencyRepository.findById(date);
-        return currency.map(CurrencyEntity::getRate).orElseGet(() -> getDollarValue(date));
+        List<CurrencyEntity> currencyEntityList = currencyRepository.findAll();
+        for (CurrencyEntity currencyEntity: currencyEntityList) {
+            if (currencyEntity.getData().equals(date)) {
+                return currencyEntity.getRate();
+            }
+        }
+        return getDollarValue(date);
     }
 
     private Double getDollarValue(String date) {
@@ -44,6 +49,7 @@ public class CurrencyService {
         }
         double rate = Double.parseDouble(nodes.get(0).getText().replace(",", "."));
         currencyRepository.save(new CurrencyEntity(date, rate));
+        currencyRepository.flush();
         return rate;
     }
 

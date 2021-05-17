@@ -1,13 +1,19 @@
 package mipt.bit.prdis.currency;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "currency")
 public class CurrencyEntity {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
+    private Long id;
+
+    @Column(name="date")
     private String date;
 
+    @Column(name="rate")
     private double rate;
 
     public CurrencyEntity(String date, double rate) {

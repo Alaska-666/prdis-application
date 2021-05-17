@@ -5,6 +5,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -23,8 +24,13 @@ public class WeatherService {
 
     private Weather getWeatherDaysBefore(int daysBefore, String city) {
         String date = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now().minusDays(daysBefore));
-        Optional<WeatherEntity> weatherEntity = weatherRepository.findById(new WeatherEntityId(date, city));
-        return weatherEntity.map(WeatherEntity::getWeather).orElseGet(() -> getWeatherProperties(date, city));
+        List<Weather> weatherList = weatherRepository.findAll();
+        for (Weather weather: weatherList) {
+            if (weather.getCity().equals(city) && weather.getDate().equals(date)) {
+                return weather;
+            }
+        }
+        return getWeatherProperties(date, city);
     }
 
     private Weather getWeatherProperties(String date, String city) {
@@ -33,7 +39,12 @@ public class WeatherService {
         if (response == null) {
             return new Weather();
         }
-        return response.forecast.forecastDay.get(0).weather;
+        Weather weather = response.forecast.forecastDay.get(0).weather;
+        weather.setCity(city);
+        weather.setDate(date);
+        weatherRepository.save(weather);
+        weatherRepository.flush();
+        return weather;
     }
 
     public WeatherList getWeather(int days, String city) {
